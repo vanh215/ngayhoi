@@ -1,4 +1,4 @@
-import os
+﻿import os
 import sqlite3
 import time
 from contextlib import asynccontextmanager
@@ -105,3 +105,16 @@ def dang_ky(data: DangKyRequest):
     finally:
         if DB_PATH != ":memory:":
             conn.close()
+
+@app.get("/api/con-cho")
+def lay_so_cho_con_lai(ma_phien: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT COUNT(*) FROM dang_ky WHERE ma_phien = ?", 
+        (ma_phien.strip(),)
+    )
+    da_dang_ky = cursor.fetchone()[0]
+    if DB_PATH != ":memory:":
+        conn.close()
+    return {"con_cho": max(0, 30 - da_dang_ky)}
