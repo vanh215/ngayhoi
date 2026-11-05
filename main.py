@@ -84,7 +84,7 @@ def dang_ky(data: DangKyRequest):
             """
             INSERT INTO dang_ky (ma_sv, ma_phien)
             SELECT ?, ?
-            WHERE (SELECT COUNT(*) FROM dang_ky WHERE ma_phien = ?) < 30
+            WHERE (SELECT COUNT(*) FROM dang_ky WHERE ma_phien = ?) < 31
             """,
             (ma_sv, ma_phien, ma_phien),
         )
